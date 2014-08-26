@@ -58,6 +58,10 @@ namespace Fos.Owin
 				if (invokeMethod == null)
 					throw new Exception("The next middleware does not have an appropriate Invoke method");
 
+                // HACK:
+                // invoke the conversion
+                
+
 				Delegate d = Delegate.CreateDelegate(typeof(Func<IDictionary<string, object>, Task>), obj, "Invoke");
 				_BuiltHandler = (Func<IDictionary<string, object>, Task>) d;
 			}

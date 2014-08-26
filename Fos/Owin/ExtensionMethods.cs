@@ -12,6 +12,7 @@ namespace Fos.Owin
 			return builder.Use(typeof(T), args);
 		}
 
+
         /// <summary>
         /// Log statistics and show a perty page at <paramref name="relativePath"/>, accessible only if <paramref name="configureAuthentication"/> allows so.
         /// This method is just a way to <see cref="Use"/> an internal middleware that serves a page with the logged statistics.

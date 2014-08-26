@@ -8,7 +8,7 @@ using FastCgiNet.Streams;
 
 namespace Fos.Owin
 {
-	internal class OwinContext : IDictionary<string, object>
+	public class OwinContext : IDictionary<string, object>
 	{
 		/// <summary>
 		/// The parameters dictionary of the owin pipeline, built through this class's methods.
