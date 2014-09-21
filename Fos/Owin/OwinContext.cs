@@ -385,7 +385,7 @@ namespace Fos.Owin
             RequestHeaders = new HeaderDictionary();
             ResponseHeaders = new HeaderDictionary();
 			Set("owin.RequestHeaders", RequestHeaders);
-			Set("owin.ResponseHeaders", ResponseHeaders);
+			Set("owin.ResponseHeaders", ResponseHeaders);            
 
 			Set("owin.Version", owinVersion);
 
@@ -394,6 +394,44 @@ namespace Fos.Owin
 
 			// It is http (not https) until proven otherwise
 			Set("owin.RequestScheme", "http");
+
+            // testing out...
+            Set("server.OnSendingHeaders", new Action<Action<object>, object>(OnSendingHeaders));
+            
 		}
+
+        object _onSendingHeadersSync = new Object();
+        List<KeyValuePair<Action<object>, object>> _onSendingHeaders;
+        public void OnSendingHeaders(Action<object> callback, object state)
+        {
+            lock (_onSendingHeadersSync)
+            {
+                if (_onSendingHeaders == null)
+                {
+                    _onSendingHeaders = new List<KeyValuePair<Action<object>, object>>();
+                }
+                _onSendingHeaders.Add(new KeyValuePair<Action<object>, object>(callback, state));
+            }
+        }
+
+        public void FireOnSendingHeaders()
+        {
+            Console.WriteLine("FireOnSendingHeaders");
+            
+            List<KeyValuePair<Action<object>, object>> onSendingHeaders = null;
+            lock (_onSendingHeadersSync)
+            {
+                onSendingHeaders = _onSendingHeaders;
+                _onSendingHeaders = null;
+            }
+            if (onSendingHeaders != null)
+            {
+                Console.WriteLine("FireOnSendingHeaders Actions");            
+                foreach (var entry in onSendingHeaders)
+                {
+                    entry.Key.Invoke(entry.Value);
+                }
+            }
+        }
 	}
 }

@@ -58,7 +58,6 @@ namespace Fos.Owin
 
             //HACK: Microsoft Middleware self defeating OWIN implementation fix
             properties["builder.AddSignatureConversion"] = new Action<Delegate>(AddSignatureConversion);
-
 		}
 
         #region // Owin Conversion Delegates //

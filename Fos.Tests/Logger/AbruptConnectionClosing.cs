@@ -19,7 +19,8 @@ namespace Fos.Tests
 
             using (var server = GetHelloWorldBoundServer())
             {
-                server.SetLogger(logger);
+                
+                SetLogger(logger);
                 server.Start(true);
 
                 // Just connect and quit

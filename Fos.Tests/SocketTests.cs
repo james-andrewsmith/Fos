@@ -44,7 +44,8 @@ namespace Fos.Tests
             };
             
             var server = new FosSelfHost(config);
-            server.Bind(ListenOn, ListenPort);
+            
+            Bind(ListenOn, ListenPort);
             
             return server;
         }

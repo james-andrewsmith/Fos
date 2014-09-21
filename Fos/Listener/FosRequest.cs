@@ -50,7 +50,9 @@ namespace Fos.Listener
 		/// </summary>
 		private void SendHeaders()
  		{
+            this.OwinContext.FireOnSendingHeaders();
 			var headers = (IDictionary<string, string[]>)OwinContext["owin.ResponseHeaders"];
+            
 			
 			using (var headerStream = new Fos.Streams.NonEndingStdoutSocketStream(Socket))
             {
