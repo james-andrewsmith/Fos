@@ -395,7 +395,8 @@ namespace Fos.Owin
 			// It is http (not https) until proven otherwise
 			Set("owin.RequestScheme", "http");
 
-            // testing out...
+            // Stole this from a reference OWIN Server (Katana I think)
+            // needed for Owin.Security in ASP.NET
             Set("server.OnSendingHeaders", new Action<Action<object>, object>(OnSendingHeaders));
             
 		}
@@ -416,8 +417,6 @@ namespace Fos.Owin
 
         public void FireOnSendingHeaders()
         {
-            Console.WriteLine("FireOnSendingHeaders");
-            
             List<KeyValuePair<Action<object>, object>> onSendingHeaders = null;
             lock (_onSendingHeadersSync)
             {
@@ -425,8 +424,7 @@ namespace Fos.Owin
                 _onSendingHeaders = null;
             }
             if (onSendingHeaders != null)
-            {
-                Console.WriteLine("FireOnSendingHeaders Actions");            
+            {        
                 foreach (var entry in onSendingHeaders)
                 {
                     entry.Key.Invoke(entry.Value);
